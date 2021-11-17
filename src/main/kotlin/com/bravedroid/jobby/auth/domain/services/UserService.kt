@@ -1,6 +1,8 @@
 package com.bravedroid.jobby.auth.domain.services
 
 import com.bravedroid.jobby.auth.domain.entities.User
+import com.bravedroid.jobby.auth.domain.exceptions.BadUserPasswordException
+import com.bravedroid.jobby.auth.domain.exceptions.UserNotFoundException
 import com.bravedroid.jobby.auth.domain.repositories.UserRepository
 import org.springframework.stereotype.Service
 
@@ -13,13 +15,14 @@ class UserService(
             user.copy(password = hashPassword(user))
     )
 
-    private fun hashPassword(user: User) =
-            securityUtil.encode(user.password)
+    private fun hashPassword(user: User) = securityUtil.hashPassword(user.password)
 
-    fun isUserExist(user: User):Boolean = findByEmail(user.email)?.let { storedUser ->
-          securityUtil.comparePassword(user.password, storedUser.password)
-      } ?: false
+    fun findUser(email: String, password: String): User {
+        val storedUser: User = userRepository.findByEmail(email) ?: throw UserNotFoundException()
+        if (!isUserPasswordCorrect(password, storedUser.password)) throw BadUserPasswordException()
+        return storedUser
+    }
 
-  private  fun findByEmail(email: String): User? = userRepository.findByEmail(email)
-
+    private fun isUserPasswordCorrect(password: String, storedPassword: String): Boolean =
+            securityUtil.comparePassword(password, storedPassword)
 }
