@@ -4,6 +4,7 @@ import com.bravedroid.jobby.auth.domain.entities.User
 import com.bravedroid.jobby.auth.domain.exceptions.BadUserPasswordException
 import com.bravedroid.jobby.auth.domain.exceptions.UserNotFoundException
 import com.bravedroid.jobby.auth.domain.repositories.UserRepository
+import com.bravedroid.jobby.auth.domain.services.utils.SecurityUtil
 import org.springframework.stereotype.Service
 
 @Service
@@ -17,7 +18,7 @@ class UserService(
 
     private fun hashPassword(user: User) = securityUtil.hashPassword(user.password)
 
-    fun findUser(email: String, password: String): User {
+    fun find(email: String, password: String): User {
         val storedUser: User = userRepository.findByEmail(email) ?: throw UserNotFoundException()
         if (!isUserPasswordCorrect(password, storedUser.password)) throw BadUserPasswordException()
         return storedUser

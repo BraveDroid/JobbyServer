@@ -3,6 +3,6 @@ package com.bravedroid.jobby.auth.domain.entities
 import java.time.Instant
 
 data class RefreshToken(
-        val token: String,
+        val hashedToken: String,
         val expiryDate: Instant,
 )

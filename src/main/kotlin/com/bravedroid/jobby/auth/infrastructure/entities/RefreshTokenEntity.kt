@@ -11,7 +11,10 @@ data class RefreshTokenEntity(
         private val id: Long = 0,
 
         @Column(nullable = false, unique = true)
-        val token: String,
+        val hashedToken: String,
+
+        @Column(nullable = false)
+        val salt: String,
 
         @Column(nullable = false)
         val expiryDate: Instant,
@@ -22,6 +25,6 @@ data class RefreshTokenEntity(
 )
 
 fun RefreshTokenEntity.toDomain() = RefreshToken(
-        token = token,
+        hashedToken = hashedToken,
         expiryDate = expiryDate,
 )

@@ -4,5 +4,5 @@ import com.bravedroid.jobby.auth.infrastructure.entities.RefreshTokenEntity
 import org.springframework.data.jpa.repository.JpaRepository
 
 interface RefreshTokenJpaRepository : JpaRepository<RefreshTokenEntity, Long> {
-    fun findByToken(token: String): RefreshTokenEntity?
+    fun findByHashedToken(hashedToken: String): RefreshTokenEntity?
 }

@@ -1,4 +1,5 @@
 package com.bravedroid.jobby.auth.domain.validators
+
 import javax.validation.ConstraintValidator
 import javax.validation.ConstraintValidatorContext
 

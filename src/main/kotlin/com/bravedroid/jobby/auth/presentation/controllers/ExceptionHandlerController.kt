@@ -1,9 +1,6 @@
 package com.bravedroid.jobby.auth.presentation.controllers
 
-import com.bravedroid.jobby.auth.domain.exceptions.BadUserPasswordException
-import com.bravedroid.jobby.auth.domain.exceptions.RefreshTokenException
-import com.bravedroid.jobby.auth.domain.exceptions.UserEmailNotAvailableException
-import com.bravedroid.jobby.auth.domain.exceptions.UserNotFoundException
+import com.bravedroid.jobby.auth.domain.exceptions.*
 import com.bravedroid.jobby.auth.presentation.dtos.ErrorMessageDto
 import com.bravedroid.jobby.auth.presentation.dtos.FieldErrorMessageDto
 import org.springframework.http.HttpStatus
@@ -32,6 +29,9 @@ class ExceptionHandlerController {
                 }
                 is BadUserPasswordException -> {
                     ResponseEntity(ErrorMessageDto(e.localizedMessage), HttpStatus.BAD_REQUEST)
+                }
+                is AccessTokenException ->{
+                    ResponseEntity(ErrorMessageDto(e.localizedMessage), HttpStatus.UNAUTHORIZED)
                 }
                 is RefreshTokenException->{
                     ResponseEntity(ErrorMessageDto(e.localizedMessage), HttpStatus.FORBIDDEN)

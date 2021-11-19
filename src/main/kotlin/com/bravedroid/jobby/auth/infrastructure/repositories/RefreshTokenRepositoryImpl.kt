@@ -16,16 +16,17 @@ class RefreshTokenRepositoryImpl(
         val refreshTokenJpaRepository: RefreshTokenJpaRepository,
         val userJpaRepository: UserJpaRepository,
 ) : RefreshTokenRepository {
-    override fun findByToken(refreshToken: String): RefreshToken? = refreshTokenJpaRepository.findByToken(refreshToken)?.toDomain()
-            ?: throw RefreshTokenException(refreshToken, "Unknown Refresh Token")
+    override fun findByHashedRefreshToken(hashedRefreshToken: String): RefreshToken? = refreshTokenJpaRepository.findByHashedToken(hashedRefreshToken)?.toDomain()
+            ?: throw RefreshTokenException(hashedRefreshToken, "Unknown Refresh Token")
 
-    override fun findUserByToken(refreshToken: String): User? =
-            refreshTokenJpaRepository.findByToken(refreshToken)?.userEntity?.toDomain()
-                    ?: throw RefreshTokenException(refreshToken, "Unknown Refresh Token")
+    override fun findUserByHashedRefreshToken(hashedRefreshToken: String): User? =
+            refreshTokenJpaRepository.findByHashedToken(hashedRefreshToken)?.userEntity?.toDomain()
+                    ?: throw RefreshTokenException(hashedRefreshToken, "Unknown Refresh Token")
 
-    override fun saveRefreshToken(createRefreshToken: String, user: User) {
+    override fun saveHashedRefreshToken(hashedRefreshToken: String, salt: String, user: User) {
         val tokenEntity = RefreshTokenEntity(
-                token = createRefreshToken,
+                salt = salt,
+                hashedToken = hashedRefreshToken,
                 expiryDate = Instant.now().plusSeconds(Duration.ofDays(60).toSeconds()),
                 userEntity = userJpaRepository.findByEmail(user.email) ?: throw UserNotFoundException()
         )
