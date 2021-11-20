@@ -1,44 +1,25 @@
-package com.bravedroid.jobby.auth.domain.services.utils
+package com.bravedroid.jobby.auth.domain.services.security.util.hashing
 
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
-import org.springframework.stereotype.Component
+import org.springframework.stereotype.Service
 import java.security.NoSuchAlgorithmException
 import java.security.spec.InvalidKeySpecException
 import java.security.spec.KeySpec
 import java.util.*
 import javax.crypto.SecretKeyFactory
 import javax.crypto.spec.PBEKeySpec
-import kotlin.random.Random
 
-@Component
-class SecurityUtil(
-        private val jwtProvider: JwtProvider,
-) {
-    private val logger: Logger = LoggerFactory.getLogger(SecurityUtil::class.java)
+@Service
+class HashingService {
+    private val logger: Logger = LoggerFactory.getLogger(HashingService::class.java)
+    private val bCryptPasswordEncoder: BCryptPasswordEncoder = BCryptPasswordEncoder()
 
-    private val passwordEncoder: BCryptPasswordEncoder = BCryptPasswordEncoder()
-
-    fun hashPassword(password: String): String = passwordEncoder.encode(password)
+    fun hashPassword(password: String): String = bCryptPasswordEncoder.encode(password)
 
     fun comparePassword(hashedPassword1: String, hashedPassword2: String): Boolean =
-            passwordEncoder.matches(hashedPassword1, hashedPassword2)
-
-    fun createJwt(idUser: Long): String = jwtProvider.createJwt(idUser)
-
-    fun decryptUserIdFromJwt(jwt: String): Long = jwtProvider.decryptUserIdFromJwt(jwt)
-
-    fun createRandomString(): String {
-        val stringLength = 50
-
-        val charPool: List<Char> = ('a'..'z') + ('A'..'Z') + ('0'..'9')
-
-        return (1..stringLength)
-                .map { _ -> Random.nextInt(0, charPool.size) }
-                .map(charPool::get)
-                .joinToString("")
-    }
+        bCryptPasswordEncoder.matches(hashedPassword1, hashedPassword2)
 
     fun createHashedValue(value: String, salt: String): String {
         var hashedValue: ByteArray? = null

@@ -25,3 +25,11 @@ fun UserEntity.toDomain() = User(
         email = email,
         password = password,
 )
+
+fun User.toUserEntity() = UserEntity(
+        id = id,
+        name = name,
+        email = email,
+        password = password,
+)
+

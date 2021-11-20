@@ -27,4 +27,5 @@ data class RefreshTokenEntity(
 fun RefreshTokenEntity.toDomain() = RefreshToken(
         hashedToken = hashedToken,
         expiryDate = expiryDate,
+        salt = salt,
 )
