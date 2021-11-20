@@ -27,7 +27,7 @@ class RefreshTokenRepositoryImpl(
         val tokenEntity = RefreshTokenEntity(
                 salt = salt,
                 hashedToken = hashedRefreshToken,
-                expiryDate = Instant.now().plusSeconds(Duration.ofDays(60).toSeconds()),
+                expiryDate = Instant.now().plusSeconds((Duration.ofDays(60).seconds)),
                 userEntity = userJpaRepository.findByEmail(user.email) ?: throw UserNotFoundException()
         )
         refreshTokenJpaRepository.save(tokenEntity)

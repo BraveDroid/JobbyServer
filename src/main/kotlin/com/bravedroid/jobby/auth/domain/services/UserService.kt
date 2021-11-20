@@ -26,4 +26,9 @@ class UserService(
 
     private fun isUserPasswordCorrect(password: String, storedPassword: String): Boolean =
             securityUtil.comparePassword(password, storedPassword)
+
+    fun findUserByToken(token: String): User {
+        val id  = securityUtil.decryptUserIdFromJwt(token)
+        return userRepository.findById(id)
+    }
 }
