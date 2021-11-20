@@ -1,5 +1,6 @@
 package com.bravedroid.jobby.auth.domain.services.utils
 
+import com.bravedroid.jobby.auth.domain.exceptions.AccessTokenException
 import io.jsonwebtoken.ExpiredJwtException
 import io.jsonwebtoken.MalformedJwtException
 import io.jsonwebtoken.SignatureException
@@ -45,7 +46,7 @@ internal class JwtProviderTest {
         `when`(dateProviderMock.provideExpirationDayForAccessToken()).thenReturn(before4hours.toDateUtil())
 
         val jwt1 = sut.createJwt(idUser = 1)
-        assertThrows<ExpiredJwtException> {
+        assertThrows<AccessTokenException> {
              sut.decryptUserIdFromJwt(jwt1)
         }
     }
@@ -58,7 +59,7 @@ internal class JwtProviderTest {
 
         val jwt1 = sut.createJwt(idUser = 1).plus("LOL")
 
-        assertThrows<SignatureException> {
+        assertThrows<AccessTokenException> {
              sut.decryptUserIdFromJwt(jwt1)
         }
     }

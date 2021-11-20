@@ -22,7 +22,7 @@ class UserController(
         if (!authorizationHeader.startsWith("Bearer ")) throw AccessTokenException()
 
         val token = authorizationHeader.substringAfter("Bearer ")
-        val user = userService.findUserByToken(token)
+        val user = userService.findByToken(token)
         val userResponseEntity = UserResponseDto(user.name, user.email)
         return ResponseEntity.ok(userResponseEntity)
     }
