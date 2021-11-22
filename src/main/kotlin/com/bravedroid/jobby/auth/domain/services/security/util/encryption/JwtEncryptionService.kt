@@ -1,27 +1,28 @@
-package com.bravedroid.jobby.auth.domain.services.utils
+package com.bravedroid.jobby.auth.domain.services.security.util.encryption
 
 import com.bravedroid.jobby.auth.domain.exceptions.AccessTokenException
 import io.jsonwebtoken.*
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
-import org.springframework.stereotype.Component
+import org.springframework.stereotype.Service
 import java.util.*
 
-@Component
-class JwtProvider(
-        private val dateProvider: DateProvider,
+@Service
+class JwtEncryptionService(
+    private val jwtDateProvider: JwtDateProvider,
 ) {
-    private val logger: Logger = LoggerFactory.getLogger(JwtProvider::class.java)
-
-    private val secretByteArray = Base64.getEncoder().encode("secretToBeStoredInSafePlace".toByteArray())
+    private companion object {
+        //todo will be stored safely
+        private const val KEY: String = "secretToBeStoredInSafePlace"
+    }
+    private val logger: Logger = LoggerFactory.getLogger(JwtEncryptionService::class.java)
+    private val secretByteArray = Base64.getEncoder().encode(KEY.toByteArray())
 
     fun createJwt(idUser: Long): String = Jwts.builder()
             .setIssuer(idUser.toString())
-            .setExpiration(dateProvider.provideExpirationDayForAccessToken())
+            .setExpiration(jwtDateProvider.provideExpirationDayForAccessToken())
             .signWith(SignatureAlgorithm.HS512, secretByteArray)
             .compact()
-
-
     fun decryptUserIdFromJwt(jwt: String): Long = try {
         Jwts.parser().setSigningKey(secretByteArray)
                 .parseClaimsJws(jwt).body.issuer.toLong()
