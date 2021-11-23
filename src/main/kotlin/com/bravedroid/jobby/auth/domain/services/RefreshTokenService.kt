@@ -1,6 +1,5 @@
 package com.bravedroid.jobby.auth.domain.services
 
-import com.bravedroid.jobby.auth.domain.entities.RefreshToken
 import com.bravedroid.jobby.auth.domain.entities.User
 import com.bravedroid.jobby.auth.domain.exceptions.RefreshTokenException
 import com.bravedroid.jobby.auth.domain.repositories.RefreshTokenRepository
@@ -21,10 +20,6 @@ class RefreshTokenService(
         val hashedRefreshToken = securityService.createHashedValue(refreshToken, salt)
         refreshTokenRepository.saveHashedRefreshToken(hashedRefreshToken, salt, user)
         return refreshToken
-    }
-
-    fun getByUser(user: User): RefreshToken? {
-        return refreshTokenRepository.findByUser(user)
     }
 
     fun isValidateRefreshTokenFormat(refreshToken: String): Boolean =

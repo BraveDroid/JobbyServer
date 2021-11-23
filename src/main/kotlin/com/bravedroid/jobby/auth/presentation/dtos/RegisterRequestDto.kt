@@ -7,19 +7,20 @@ import javax.validation.constraints.NotEmpty
 
 
 data class RegisterRequestDto(
-        @field:NotEmpty
-        val name: String = "",
+    @field:NotEmpty
+    val name: String = "",
 
-        @field:NotEmpty
-        @field:Email
-        val email: String = "",
+    @field:NotEmpty
+    @field:Email
+    val email: String = "",
 
-        @field:NotEmpty
-        @field:PasswordConstraint
-        val password: String = "",
+    @field:NotEmpty
+    @field:PasswordConstraint
+    val password: String = "",
 )
+
 fun RegisterRequestDto.toModel() = User(
-        name = name,
-        email = email,
-        password = password,
+    name = name,
+    email = email,
+    password = password,
 )

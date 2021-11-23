@@ -4,9 +4,9 @@ import com.bravedroid.jobby.auth.domain.entities.User
 
 
 data class RegisterResponseDto(
-        val name: String = "",
+    val name: String = "",
 )
 
 fun User.toRegisterResponseDto() = RegisterResponseDto(
-        name = name,
+    name = name,
 )

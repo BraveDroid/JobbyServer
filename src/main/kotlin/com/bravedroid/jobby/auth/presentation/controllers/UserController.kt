@@ -2,7 +2,7 @@ package com.bravedroid.jobby.auth.presentation.controllers
 
 import com.bravedroid.jobby.auth.domain.exceptions.AccessTokenException
 import com.bravedroid.jobby.auth.domain.services.UserService
-import com.bravedroid.jobby.auth.presentation.dtos.UserResponseDto
+import com.bravedroid.jobby.auth.presentation.dtos.toUserResponseDto
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestHeader
@@ -23,7 +23,6 @@ class UserController(
 
         val token = authorizationHeader.substringAfter("Bearer ")
         val user = userService.findByAccessToken(token)
-        val userResponseEntity = UserResponseDto(user.name, user.email)
-        return ResponseEntity.ok(userResponseEntity)
+         return ResponseEntity.ok(user.toUserResponseDto())
     }
 }

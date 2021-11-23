@@ -13,7 +13,7 @@ class UserService(
     private val securityService: SecurityService,
 ) {
     fun save(user: User): User = userRepository.save(
-            user.copy(password = hashPassword(user))
+        user.copy(password = hashPassword(user))
     )
 
     private fun hashPassword(user: User) = securityService.hashPassword(user.password)
@@ -25,10 +25,10 @@ class UserService(
     }
 
     private fun isUserPasswordCorrect(password: String, storedPassword: String): Boolean =
-            securityService.comparePassword(password, storedPassword)
+        securityService.comparePassword(password, storedPassword)
 
     fun findByAccessToken(accessToken: String): User {
-        val id  = securityService.decryptUserIdFromJwt(accessToken)
+        val id = securityService.decryptUserIdFromJwt(accessToken)
         return userRepository.findById(id)
     }
 

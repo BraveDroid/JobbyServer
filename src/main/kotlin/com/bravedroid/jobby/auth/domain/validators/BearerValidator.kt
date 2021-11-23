@@ -6,8 +6,8 @@ import javax.validation.ConstraintValidatorContext
 class BearerValidator : ConstraintValidator<BearerConstraint?, String?> {
 
     override fun isValid(
-            contactField: String?,
-            cxt: ConstraintValidatorContext,
+        contactField: String?,
+        cxt: ConstraintValidatorContext,
     ): Boolean {
         return contactField != null &&
                 contactField.startsWith("Bearer ")

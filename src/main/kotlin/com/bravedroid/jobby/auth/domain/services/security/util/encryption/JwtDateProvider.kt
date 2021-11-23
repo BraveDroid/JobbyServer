@@ -7,5 +7,5 @@ import java.util.*
 @Component
 class JwtDateProvider {
     fun provideExpirationDayForAccessToken(): Date =
-            Date(System.currentTimeMillis() + Duration.ofDays(1).toMillis())
+        Date(System.currentTimeMillis() + Duration.ofDays(1).toMillis())
 }

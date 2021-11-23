@@ -7,15 +7,15 @@ import kotlin.reflect.KClass
 @Constraint(validatedBy = [BearerValidator::class])
 
 @Target(
-        AnnotationTarget.FUNCTION,
-        AnnotationTarget.VALUE_PARAMETER,
-        AnnotationTarget.PROPERTY_GETTER,
-        AnnotationTarget.PROPERTY_SETTER,
-        AnnotationTarget.FIELD,
+    AnnotationTarget.FUNCTION,
+    AnnotationTarget.VALUE_PARAMETER,
+    AnnotationTarget.PROPERTY_GETTER,
+    AnnotationTarget.PROPERTY_SETTER,
+    AnnotationTarget.FIELD,
 )
 @kotlin.annotation.Retention(AnnotationRetention.RUNTIME)
 annotation class BearerConstraint(
-        val message: String = "missing Bearer prefix",
-        val groups: Array<KClass<*>> = [],
-        val payload: Array<KClass<*>> = [],
+    val message: String = "missing Bearer prefix",
+    val groups: Array<KClass<*>> = [],
+    val payload: Array<KClass<*>> = [],
 )

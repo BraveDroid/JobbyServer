@@ -20,11 +20,11 @@ class PasswordValidator : ConstraintValidator<PasswordConstraint?, String?> {
     }
 
     override fun isValid(
-            contactField: String?,
-            cxt: ConstraintValidatorContext,
+        contactField: String?,
+        cxt: ConstraintValidatorContext,
     ): Boolean {
-         return contactField != null &&
+        return contactField != null &&
                 contactField.length >= minLength &&
                 contactField.length <= maxLength
-     }
+    }
 }
