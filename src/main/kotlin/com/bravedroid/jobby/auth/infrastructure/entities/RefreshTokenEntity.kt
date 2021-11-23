@@ -6,26 +6,26 @@ import javax.persistence.*
 
 @Entity(name = "REFRESH_TOKEN")
 data class RefreshTokenEntity(
-        @Id
-        @GeneratedValue(strategy = GenerationType.IDENTITY)
-        private val id: Long = 0,
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private val id: Long = 0,
 
-        @Column(nullable = false, unique = true)
-        val hashedToken: String,
+    @Column(nullable = false, unique = true)
+    val hashedToken: String,
 
-        @Column(nullable = false)
-        val salt: String,
+    @Column(nullable = false)
+    val salt: String,
 
-        @Column(nullable = false)
-        val expiryDate: Instant,
+    @Column(nullable = false)
+    val expiryDate: Instant,
 
-        @OneToOne(cascade = [CascadeType.REMOVE])
-        @JoinColumn(name = "user_id", referencedColumnName = "id")
-        val userEntity: UserEntity,
+    @OneToOne(cascade = [CascadeType.REMOVE])
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    val userEntity: UserEntity,
 )
 
 fun RefreshTokenEntity.toDomain() = RefreshToken(
-        hashedToken = hashedToken,
-        expiryDate = expiryDate,
-        salt = salt,
+    hashedToken = hashedToken,
+    expiryDate = expiryDate,
+    salt = salt,
 )

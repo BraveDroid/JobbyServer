@@ -8,5 +8,5 @@ interface RefreshTokenRepository {
     fun findUserByHashedRefreshToken(hashedRefreshToken: String): User?
     fun saveHashedRefreshToken(hashedRefreshToken: String, salt: String, user: User)
     fun findByUser(user: User): RefreshToken?
-    fun findAllRefreshTokenByUser(user: User) : List<RefreshToken>
+    fun findAllRefreshTokenByUser(user: User): List<RefreshToken>
 }

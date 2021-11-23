@@ -6,30 +6,31 @@ import javax.persistence.*
 @Entity
 @Table(name = "USER")
 data class UserEntity(
-        @Id
-        @GeneratedValue(strategy = GenerationType.IDENTITY)
-        val id: Long = 0,
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    val id: Long = 0,
 
-        @Column
-        val name: String,
+    @Column
+    val name: String,
 
-        @Column(unique = true)
-        val email: String,
+    @Column(unique = true)
+    val email: String,
 
-        @Column
-        val password: String,
+    @Column
+    val password: String,
 )
+
 fun UserEntity.toDomain() = User(
-        id = id,
-        name = name,
-        email = email,
-        password = password,
+    id = id,
+    name = name,
+    email = email,
+    password = password,
 )
 
 fun User.toUserEntity() = UserEntity(
-        id = id,
-        name = name,
-        email = email,
-        password = password,
+    id = id,
+    name = name,
+    email = email,
+    password = password,
 )
 
