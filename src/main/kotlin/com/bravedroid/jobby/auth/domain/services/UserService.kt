@@ -12,9 +12,7 @@ class UserService(
     private val userRepository: UserRepository,
     private val securityService: SecurityService,
 ) {
-    fun save(user: User): User = userRepository.save(
-        user.copy(password = hashPassword(user))
-    )
+    fun save(user: User): User = userRepository.save(user.copy(password = hashPassword(user)))
 
     private fun hashPassword(user: User) = securityService.hashPassword(user.password)
 
@@ -29,7 +27,7 @@ class UserService(
 
     fun findByAccessToken(accessToken: String): User {
         val id = securityService.decryptUserIdFromJwt(accessToken)
-        return userRepository.findById(id)?: throw UserNotFoundException()
+        return userRepository.findById(id) ?: throw UserNotFoundException()
     }
 
     fun findByEmail(email: String): User? = userRepository.findByEmail(email)
