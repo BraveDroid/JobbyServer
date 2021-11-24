@@ -29,7 +29,7 @@ class UserService(
 
     fun findByAccessToken(accessToken: String): User {
         val id = securityService.decryptUserIdFromJwt(accessToken)
-        return userRepository.findById(id)
+        return userRepository.findById(id)?: throw UserNotFoundException()
     }
 
     fun findByEmail(email: String): User? = userRepository.findByEmail(email)

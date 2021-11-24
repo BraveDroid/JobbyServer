@@ -91,7 +91,8 @@ internal class AuthControllerTest {
         )
         given(userServiceMock.save(requestObject.toModel())).willReturn(
             User(
-                0, name = "SALAH",
+                id = 0,
+                name = "SALAH",
                 email = "a@a.com",
                 password = "password_hashed",
             )
@@ -241,7 +242,7 @@ internal class AuthControllerTest {
     }
 }
 
-private fun Any.toJsonString(): String {
+fun Any.toJsonString(): String {
     val objectMapper = ObjectMapper()
     return objectMapper.writeValueAsString(this)
 }

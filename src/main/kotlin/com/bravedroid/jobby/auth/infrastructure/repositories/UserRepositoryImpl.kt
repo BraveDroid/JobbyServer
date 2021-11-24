@@ -18,7 +18,7 @@ class UserRepositoryImpl(
         return userJpaRepository.save(user.toPersistenceEntity()).toDomain()
     }
 
-    override fun findById(id: Long): User = userJpaRepository.findById(id).get().toDomain()
+    override fun findById(id: Long) = userJpaRepository.findById(id).get().toDomain()
 
     override fun findByEmail(email: String) = userJpaRepository.findByEmail(email)?.toDomain()
 
