@@ -11,8 +11,10 @@ import com.bravedroid.jobby.auth.infrastructure.entities.toUserEntity
 import org.springframework.stereotype.Repository
 import java.time.Duration
 import java.time.Instant
+import javax.transaction.Transactional
 
 @Repository
+@Transactional
 class RefreshTokenRepositoryImpl(
     val refreshTokenJpaRepository: RefreshTokenJpaRepository,
     val userJpaRepository: UserJpaRepository,
@@ -40,6 +42,6 @@ class RefreshTokenRepositoryImpl(
 
     override fun findAllRefreshTokenByUser(user: User): List<RefreshToken> {
         val entityList = refreshTokenJpaRepository.findAllByUserEntity(user.toUserEntity())
-        return entityList.mapNotNull { it?.toDomain() }
+        return entityList?.map { it.toDomain() }?: emptyList()
     }
 }

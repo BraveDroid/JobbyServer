@@ -7,8 +7,9 @@ import javax.persistence.*
 @Entity(name = "REFRESH_TOKEN")
 data class RefreshTokenEntity(
     @Id
+    @Column(name = "RefreshTokenId")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private val id: Long = 0,
+    val id: Long = 0,
 
     @Column(nullable = false, unique = true)
     val hashedToken: String,
@@ -19,8 +20,8 @@ data class RefreshTokenEntity(
     @Column(nullable = false)
     val expiryDate: Instant,
 
-    @OneToOne(cascade = [CascadeType.REMOVE])
-    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    @ManyToOne
+    @JoinColumn(name = "userIdFk")
     val userEntity: UserEntity,
 )
 

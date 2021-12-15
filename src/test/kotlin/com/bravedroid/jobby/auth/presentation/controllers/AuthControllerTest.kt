@@ -91,7 +91,6 @@ internal class AuthControllerTest {
         )
         given(userServiceMock.save(requestObject.toModel())).willReturn(
             User(
-                id = 0,
                 name = "SALAH",
                 email = "a@a.com",
                 password = "password_hashed",
@@ -163,7 +162,7 @@ internal class AuthControllerTest {
         )
 
         val user = User(
-            0, name = "SALAH",
+            name = "SALAH",
             email = "a@a.com",
             password = "password_hashed",
         )
@@ -193,7 +192,7 @@ internal class AuthControllerTest {
     fun `check refreshToken with invalid body should return FORBIDDEN 403`() {
         val dto = RefreshTokenRequestDto("j1teIkkc0YbXhJhpiSHSJDM")
         val user = User(
-            0, name = "SALAH",
+            name = "SALAH",
             email = "a@a.com",
             password = "password_hashed",
         )
@@ -216,7 +215,7 @@ internal class AuthControllerTest {
     fun `check refreshToken with valid content body should return OK 200`() {
         val dto = RefreshTokenRequestDto("j1teIkkc0YbXhJhpiSHSJDM")
         val user = User(
-            0, name = "SALAH",
+            name = "SALAH",
             email = "a@a.com",
             password = "password_hashed",
         )

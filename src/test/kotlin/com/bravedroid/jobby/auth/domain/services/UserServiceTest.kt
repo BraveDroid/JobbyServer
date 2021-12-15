@@ -46,7 +46,6 @@ internal class UserServiceTest {
     fun `verify the call of the hashPassword from the securityServiceMock in #save `() {
         `when`(securityServiceMock.hashPassword("password")).thenReturn("password_hashed")
         val user = User(
-            id = 0,
             name = "SALAH",
             email = "a@a.com",
             password = "password",
@@ -59,7 +58,6 @@ internal class UserServiceTest {
     @Test
     fun `verify the call of the findByEmail from the  userRepositoryMock in #find`() {
         val user = User(
-            id = 0,
             name = "SALAH",
             email = "a@a.com",
             password = "password",
@@ -73,7 +71,6 @@ internal class UserServiceTest {
     @Test
     fun `verify when findByEmail return null than throw`() {
         val user = User(
-            id = 0,
             name = "SALAH",
             email = "a@a.com",
             password = "password",
@@ -87,7 +84,6 @@ internal class UserServiceTest {
     @Test
     fun `verify when isUserPasswordCorrect return false than throw`() {
         val user = User(
-            id = 0,
             name = "SALAH",
             email = "a@a.com",
             password = "password",
@@ -102,7 +98,6 @@ internal class UserServiceTest {
     @Test
     fun `verify the call of the findById from the userRepositoryMock in #findByAccessToken`() {
         val user = User(
-            id = 0,
             name = "SALAH",
             email = "a@a.com",
             password = "password",
@@ -116,7 +111,6 @@ internal class UserServiceTest {
     @Test
     fun `verify when findById return null than throw #findByAccessToken`() {
         val user = User(
-            id = 0,
             name = "SALAH",
             email = "a@a.com",
             password = "password",
@@ -131,7 +125,6 @@ internal class UserServiceTest {
     @Test
     fun `verify the call of the findByEmail from the userRepositoryMock in #findByEmail`() {
         val user = User(
-            id = 0,
             name = "SALAH",
             email = "a@a.com",
             password = "password",

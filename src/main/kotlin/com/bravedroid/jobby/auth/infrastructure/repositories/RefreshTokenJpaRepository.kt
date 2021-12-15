@@ -7,5 +7,5 @@ import org.springframework.data.jpa.repository.JpaRepository
 interface RefreshTokenJpaRepository : JpaRepository<RefreshTokenEntity, Long> {
     fun findByHashedToken(hashedToken: String): RefreshTokenEntity?
     fun findByUserEntity(userEntity: UserEntity): RefreshTokenEntity?
-    fun findAllByUserEntity(userEntity: UserEntity): List<RefreshTokenEntity?>
+    fun findAllByUserEntity(userEntity: UserEntity): List<RefreshTokenEntity>?
 }
