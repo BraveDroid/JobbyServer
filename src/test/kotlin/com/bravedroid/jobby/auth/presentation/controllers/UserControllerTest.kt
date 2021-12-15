@@ -3,7 +3,6 @@ package com.bravedroid.jobby.auth.presentation.controllers
 import com.bravedroid.jobby.auth.domain.entities.User
 import com.bravedroid.jobby.auth.domain.exceptions.UserNotFoundException
 import com.bravedroid.jobby.auth.domain.services.UserService
-import com.bravedroid.jobby.auth.presentation.dtos.RegisterResponseDto
 import com.bravedroid.jobby.auth.presentation.dtos.UserResponseDto
 import org.junit.jupiter.api.Test
 import org.mockito.BDDMockito.given
@@ -57,7 +56,6 @@ internal class UserControllerTest {
 
         given(userServiceMock.findByAccessToken("eyJhbGciOiJIUzUxMiJ9")).willReturn(
             User(
-                id = 0,
                 name = "SALAH",
                 email = "a@a.com",
                 password = "password_hashed",
@@ -69,10 +67,14 @@ internal class UserControllerTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON)
         ).andExpect(MockMvcResultMatchers.status().isOk)
-            .andExpect(MockMvcResultMatchers.content().json(UserResponseDto(
-                name = "SALAH",
-                email = "a@a.com",
-            ).toJsonString()))
+            .andExpect(
+                MockMvcResultMatchers.content().json(
+                    UserResponseDto(
+                        name = "SALAH",
+                        email = "a@a.com",
+                    ).toJsonString()
+                )
+            )
 
     }
 }

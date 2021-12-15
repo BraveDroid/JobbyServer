@@ -6,8 +6,10 @@ import com.bravedroid.jobby.auth.domain.repositories.UserRepository
 import com.bravedroid.jobby.auth.infrastructure.entities.UserEntity
 import com.bravedroid.jobby.auth.infrastructure.entities.toDomain
 import org.springframework.stereotype.Repository
+import javax.transaction.Transactional
 
 @Repository
+@Transactional
 class UserRepositoryImpl(
     private val userJpaRepository: UserJpaRepository
 ) : UserRepository {
@@ -23,6 +25,7 @@ class UserRepositoryImpl(
     override fun findByEmail(email: String) = userJpaRepository.findByEmail(email)?.toDomain()
 
     private fun User.toPersistenceEntity(): UserEntity = UserEntity(
+        id=id,
         name = name,
         email = email,
         password = password,
