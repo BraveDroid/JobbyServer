@@ -1,13 +1,15 @@
 package com.bravedroid.jobby.auth.infrastructure.entities
 
 import com.bravedroid.jobby.auth.domain.entities.RefreshToken
+import java.io.Serializable
 import java.time.Instant
 import javax.persistence.*
 
-@Entity(name = "REFRESH_TOKEN")
+@Table(name = "refresh_token")
+@Entity(name = "RefreshToken")
 data class RefreshTokenEntity(
     @Id
-    @Column(name = "RefreshTokenId")
+    @Column(name = "refreshTokenId")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long = 0,
 
@@ -19,14 +21,21 @@ data class RefreshTokenEntity(
 
     @Column(nullable = false)
     val expiryDate: Instant,
-
-    @ManyToOne
+//    cascade = [CascadeType.ALL],
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "userIdFk")
-    val userEntity: UserEntity,
-)
+    var ownerUserEntity: UserEntity? = null,
+) : Serializable
 
-fun RefreshTokenEntity.toDomain() = RefreshToken(
+fun RefreshTokenEntity.toDomain(): RefreshToken = RefreshToken(
     hashedToken = hashedToken,
     expiryDate = expiryDate,
     salt = salt,
+)
+
+fun RefreshToken.toRefreshTokenEntity(): RefreshTokenEntity = RefreshTokenEntity(
+    id = id,
+    hashedToken = hashedToken,
+    salt = salt,
+    expiryDate = expiryDate,
 )
